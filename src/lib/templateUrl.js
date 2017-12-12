@@ -8,32 +8,37 @@
 
   var promises = [];
 
+  //Q: what is src in this context? and html file? a link? <-----------
   window.templateURL = function(src) {
     var template;
 
-    // create a promise
-    var defer = $.Deferred();
-    defer.done(data => {
+    // create a promise // REALLY COOL!
+    var defer = $. // creates a new deferred object
+    defer.done(data => { 
       template = _.template(data);
     });
-    promises.push(defer);
+    //passed in a line of code that will execute when
+    //the deffered object is ready for use.
+    // in this case, it's the _.template conversion
+
+    promises.push(defer); // adds it to a list of queued promises
 
     // create a node and load the src, then
     // resolve promise on successful load
     $('<script>').load(src, (data, status) => {
       defer.resolve(data);
-    });
+    }); // only runs on the data when it becomes available
 
     return function() {
       if (!template) {
         console.error(`Template '${src}' failed to load`);
         return;
       }
-      return template.apply(this, arguments);
+      return template.apply(this, arguments); //Q:is arguments the src? <------------
     };
   };
 
-  window.backboneReady = function(callback) {
+  window.backboneReady = function(callback) { //will be called in index
     // wait for the dom ready event to fire
     // then wait for all the templates to load
     $(document).ready(() => $.when(...promises).then(callback));

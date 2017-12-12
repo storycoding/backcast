@@ -7,9 +7,13 @@
   "private": true,
   "scripts": {
     "test": "open SpecRunner.html",
-    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash"
+    "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
+
+    "installlive": "npm install -g live-server", // added these two in hopes of auto set-up
+    "golive": "live-server"  // auto startup would be awesome! 
   },
   "dependencies": {
+    "live-server": "^1.2.0", // does adding this here automatically install this dependency?
     "backbone": "^1.3.3",
     "bootstrap": "^4.0.0-alpha.2",
     "jquery": "^3.0.0",
