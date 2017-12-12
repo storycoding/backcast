@@ -9,8 +9,7 @@
     "test": "open SpecRunner.html",
     "postinstall": "curl -s https://raw.githubusercontent.com/reactorcore/pomander/master/bin/install | bash",
 
-    "installlive": "npm install -g live-server", // added these two in hopes of auto set-up
-    "golive": "live-server"  // auto startup would be awesome! 
+    "start": "live-server"  // auto startup would be awesome! 
   },
   "dependencies": {
     "live-server": "^1.2.0", // does adding this here automatically install this dependency?
@@ -27,3 +26,8 @@
     "sinon": "1.17.3"
   }
 }
+
+//npm install *package* --save // installs the package and saves
+                                // it in the dependencies obj
+
+//npm run *scriptname* -- // looks up 'scripts' on this json and runs it  
