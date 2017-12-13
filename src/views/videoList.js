@@ -1,16 +1,10 @@
 var VideoListView = Backbone.View.extend({
 
 
-   initialize: function() {
+  initialize: function() {
     this.listenTo(this.collection, 'sync', this.render);
   },
-
-
-  handleClick: function() {
-    this.model.select();
-  },  
-
-
+  
   render: function() {
     this.$el.children().detach();
     this.$el.html(this.template());
@@ -20,24 +14,10 @@ var VideoListView = Backbone.View.extend({
         return new VideoListEntryView({ model: video }).render().el;
       })
     );
-
-    return this;
-  },
-
-  events: {
-    'click .video-list-entry-title': 'handleClick'
-  },
-
-  renderVideo: function(video) {
-    let videoView = new VideoPlayerView({exampleVideoData: Window.exampleVideoData});
-    console.log('videoview = ', videoView);
-
-    videoView = this.template(videoView);
     
-
-    return videoView;
+  return this;
   },
 
-  template: templateURL('src/templates/videoListEntry.html')
+  template: templateURL('src/templates/videoList.html')
 
 });

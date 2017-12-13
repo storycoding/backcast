@@ -1,32 +1,49 @@
 var AppView = Backbone.View.extend({
 
   el: '#app',
-  
-  //el: '<div id="app"</div>', - wouldn't this be better?
 
   initialize: function() {
-    console.log('appView Initialized')
     this.videos = new Videos(); //makes a new collection of videos
     
-    // hoping to make it render on initialization, but
     // render should be okay to call on init, because it will only
     // get called once the Backbone promises are ready (check index)
-    this.render(); 
+
+    this.listenTo(this.videos, 'sync', this.selectFirst);
+    //this.videos.search('javascript tutorial'); //trouble!
+    this.render();
   },
 
-  className: 'appView',
+
+  selectFirst: function() {
+    if (this.videos.length > 0) {
+      this.videos.at(0).select();
+    }
+  },
   
-
-  render: function() { // not running
-    console.log('this = ', this); 
-
+  render: function() {
     this.$el.html(this.template());
 
-    $('#app').append(this.$el);
-    return this.$el;
-    
-  },
+    //rendering all the components
+    new SearchView({
+      collection: this.videos,
+      el: this.$('.search')
+    }).render();
 
+    new VideoListView({
+      collection: this.videos,
+      el: this.$('.list')
+    }).render();
+
+    new VideoPlayerView({
+      model: this.videos.at(0),
+      collection: this.videos,
+      el: this.$('.player')
+    }).render();
+
+    return this;
+  },
+  
+  //still sources the same components
   template: templateURL('src/templates/app.html')
 
 });
