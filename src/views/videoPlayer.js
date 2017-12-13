@@ -1,19 +1,23 @@
 var VideoPlayerView = Backbone.View.extend({
 
-
-  render: function() {
-    this.$el.html('<div class="loading">Please wait...</div>');
-
-    $('.col-md-7').append(this.$el);
-    
-
-    return this;
+  initialize: function() {
+    this.listenTo(this.collection, 'select', this.selectVideo);
+  },
+  
+  selectVideo: function(selection) {
+    this.model = selection;
+    this.render();
   },
 
-   events: {
-  "select" : "this.render" //what would we replace click with?
+  render: function() {
 
-//write here the triggers''
+    if (this.model !== undefined) {
+      this.$el.html(this.template(this.model.attributes));
+
+    } else {
+      this.$el.html('<div class="loading">Please wait...</div>');
+    }
+      return this;
   },
 
   template: templateURL('src/templates/videoPlayer.html')

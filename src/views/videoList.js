@@ -1,29 +1,31 @@
 var VideoListView = Backbone.View.extend({
 
-  initialize: function() {
 
-    this.render();
-      
-    
+   initialize: function() {
+    this.listenTo(this.collection, 'sync', this.render);
   },
 
+
+  handleClick: function() {
+    this.model.select();
+  },  
+
+
   render: function() {
-    
-    //for each video entry object - render it!
-    this.$el.empty();
-    
-    //why infinite loop?
-    for (var i = 0; i < 5; i++) {
-      console.log('iterating videolistview, video = ', window.exampleVideoData[i])
-      this.$el.append(this.renderVideo(exampleVideoData[i])); //these need to be converted
+    this.$el.children().detach();
+    this.$el.html(this.template());
 
-    }
+    this.$('.video-list').append(
+      this.collection.map(function(video) {
+        return new VideoListEntryView({ model: video }).render().el;
+      })
+    );
 
-
-    $('.col-md-5').append(this.$el); // 
-
-    console.log('this.$el = ', this.$el)
     return this;
+  },
+
+  events: {
+    'click .video-list-entry-title': 'handleClick'
   },
 
   renderVideo: function(video) {
@@ -36,6 +38,6 @@ var VideoListView = Backbone.View.extend({
     return videoView;
   },
 
-  template: templateURL('src/data/exampleVideoData.js')
+  template: templateURL('src/templates/videoListEntry.html')
 
 });

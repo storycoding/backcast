@@ -19,7 +19,6 @@ var AppView = Backbone.View.extend({
 
   render: function() { // not running
     console.log('this = ', this); 
-    console.log('this.model = ', this.model);
 
     this.$el.html(this.template());
 
