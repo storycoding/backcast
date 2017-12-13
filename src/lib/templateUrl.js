@@ -1,4 +1,3 @@
-
 // DO NOT MODIFY THIS CODE -- unless you find a bug.
 
 // Dynamically load HTML template files into the browser.
@@ -8,13 +7,12 @@
 
   var promises = [];
 
-  //Q: what is src in this context? and html file? a link? <-----------
   window.templateURL = function(src) {
     var template;
 
     // create a promise // REALLY COOL!
-    var defer = $. // creates a new deferred object
-    defer.done(data => { 
+    var defer = $.Deferred(); // creates a new deferred object
+    defer.done(data => {
       template = _.template(data);
     });
     //passed in a line of code that will execute when
@@ -38,10 +36,11 @@
     };
   };
 
-  window.backboneReady = function(callback) { //will be called in index
+  window.backboneReady = function(callback) {
     // wait for the dom ready event to fire
     // then wait for all the templates to load
     $(document).ready(() => $.when(...promises).then(callback));
   };
 
 })();
+
